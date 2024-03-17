@@ -1,6 +1,7 @@
 package day2;
 
 import day2.loginPojo.AddContact;
+import day2.loginPojo.AddUser;
 import day2.loginPojo.Login;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -24,40 +25,37 @@ public class TC_001 {
         Response response = given().contentType(ContentType.JSON).log().all().body(lp).post();
         response.prettyPrint();
         token = response.then().extract().path("token");
-       // System.out.println("Token: " + token);
+        // System.out.println("Token: " + token);
     }
 
     @Test(priority = 2)
-    public void addContact(){
+    public void addContact() {
         RestAssured.baseURI = baseUrl;
         RestAssured.basePath = "/contacts";
 
         AddContact ac = new AddContact();
-        ac.setBirthdate(Utlis.dateofbirth());
-        ac.setCity(Utlis.city());
-        ac.setFirstName(Utlis.firstName());
-        ac.setLastName(Utlis.lastName());
-        ac.setPhone(Utlis.mobileNumber());
-        ac.setEmail(Utlis.email());
-        ac.setCountry(Utlis.country());
-        ac.setPostalCode(Utlis.pincode());
-        ac.setStreet1(Utlis.street1());
-        ac.setStreet2(Utlis.street2());
-        ac.setStateProvince(Utlis.state());
+        ac.setBirthdate(Utils.dateofbirth());
+        ac.setCity(Utils.city());
+        ac.setFirstName(Utils.firstName());
+        ac.setLastName(Utils.lastName());
+        ac.setPhone(Utils.mobileNumber());
+        ac.setEmail(Utils.email());
+        ac.setCountry(Utils.country());
+        ac.setPostalCode(Utils.pincode());
+        ac.setStreet1(Utils.street1());
+        ac.setStreet2(Utils.street2());
+        ac.setStateProvince(Utils.state());
 
 
         Response response = given()
                 .contentType(ContentType.JSON)
-                .header("Authorization","Bearer "+token).
-                 log().all()
+                .header("Authorization", "Bearer " + token).
+                log().all()
                 .body(ac).post();
 
         response.prettyPrint();
 
-        System.out.println("Status code: "+response.getStatusCode());
-
-
+        System.out.println("Status code: " + response.getStatusCode());
     }
-
 
 }

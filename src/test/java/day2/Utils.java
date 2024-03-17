@@ -1,13 +1,11 @@
 package day2;
 
-import com.github.javafaker.DateAndTime;
 import com.github.javafaker.Faker;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Utlis {
+public class Utils {
 
     public static String firstName(){
         Faker faker = new Faker();
@@ -65,5 +63,10 @@ public class Utlis {
     public static String pincode(){
         Faker faker = new Faker();
         return faker.address().zipCode();
+    }
+
+    public static String password(){
+        Faker faker = new Faker();
+        return faker.internet().password();
     }
 }
