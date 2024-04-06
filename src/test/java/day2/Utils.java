@@ -92,16 +92,19 @@ public class Utils {
     }
 
 
-    public static String getJsonValue(String filename,String key){
-        Map<String, Objects> jsonMap = null;
-        try{
-            String filepath = System.getProperty("user.dir")+File.separator+filename+".yaml";
-            Yaml yaml = new Yaml();
-            Reader filereader = new FileReader(filepath);
-            jsonMap = yaml.load(filereader);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+
+        public static String getJsonStringFromYamlFile(String fileName, String key) {
+            Map<String, Object> jsonMap = null;
+            try {
+                String filePath = System.getProperty("user.dir") +File.separator+ fileName + ".yaml";
+                System.out.println(filePath);
+                Yaml yaml = new Yaml();
+                Reader fileReader = new FileReader(filePath);
+                jsonMap = yaml.load(fileReader);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return jsonMap.get(key).toString();
         }
-        return  jsonMap.get(key).toString();
     }
-}
+
