@@ -1,17 +1,18 @@
 package day2;
 
 import day2.loginPojo.AddContact;
-import day2.loginPojo.AddUser;
 import day2.loginPojo.Login;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
-public class TC_001 {
+public class AssertionExample_HamcrustLib {
 
     String baseUrl = "https://thinking-tester-contact-list.herokuapp.com";
     String token = null;
@@ -33,7 +34,7 @@ public class TC_001 {
     public void addContact() {
         RestAssured.baseURI = baseUrl;
         RestAssured.basePath = "/contacts";
-
+        String country =Utils.country();
         AddContact ac = new AddContact();
         ac.setBirthdate(Utils.dateofbirth());
         ac.setCity(Utils.city());
@@ -41,20 +42,19 @@ public class TC_001 {
         ac.setLastName(Utils.lastName());
         ac.setPhone(Utils.mobileNumber());
         ac.setEmail(Utils.email());
-        ac.setCountry(Utils.country());
+        ac.setCountry(country);
         ac.setPostalCode(Utils.pincode());
         ac.setStreet1(Utils.street1());
         ac.setStreet2(Utils.street2());
         ac.setStateProvince(Utils.state());
 
 
-        Response response = given()
-                .contentType(ContentType.JSON)
-                .header("Authorization", "Bearer " + token).
-                log().all()
-                .body(ac).post();
+       RequestSpecification req = Utils.specBuilder(token);
+       Response  response =   req.body(ac).post();
 
         response.prettyPrint();
+
+         response.then().assertThat().statusCode(201).body("country",equalTo(country));
 
         System.out.println("Status code: " + response.getStatusCode());
     }

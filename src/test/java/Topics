@@ -1,0 +1,13 @@
+Spec builder --> request builder
+Assertion
+reading yaml
+
+OAuth 1 --> Twitter / Google map
+OAuth 2 --> PAYpal --> SecretKey / Client ID -> Ber
+API key --> API key
+JWT token
+Bearer token --> contact api
+Basic Auth -> JIRA
+
+https://petstore.swagger.io/#/store/getInventory
+https://developer.paypal.com/api/rest/

@@ -1,9 +1,19 @@
 package day2;
 
 import com.github.javafaker.Faker;
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.http.ContentType;
+import io.restassured.specification.RequestSpecification;
+import org.yaml.snakeyaml.Yaml;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.Reader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
+import java.util.Objects;
 
 public class Utils {
 
@@ -68,5 +78,30 @@ public class Utils {
     public static String password(){
         Faker faker = new Faker();
         return faker.internet().password();
+    }
+
+    static String baseUrl = "https://thinking-tester-contact-list.herokuapp.com";
+
+
+    public static RequestSpecification specBuilder(String token){
+        RequestSpecification req = new RequestSpecBuilder().setBaseUri(baseUrl)
+                .setContentType(ContentType.JSON)
+                .addHeader("Authorization", "Bearer " + token).build();
+
+        return req;
+    }
+
+
+    public static String getJsonValue(String filename,String key){
+        Map<String, Objects> jsonMap = null;
+        try{
+            String filepath = System.getProperty("user.dir")+File.separator+filename+".yaml";
+            Yaml yaml = new Yaml();
+            Reader filereader = new FileReader(filepath);
+            jsonMap = yaml.load(filereader);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return  jsonMap.get(key).toString();
     }
 }

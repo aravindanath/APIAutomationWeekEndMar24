@@ -1,17 +1,16 @@
 package day2;
 
 import day2.loginPojo.AddContact;
-import day2.loginPojo.AddUser;
 import day2.loginPojo.Login;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
 
-public class TC_001 {
+public class AssertionExample {
 
     String baseUrl = "https://thinking-tester-contact-list.herokuapp.com";
     String token = null;
@@ -55,6 +54,8 @@ public class TC_001 {
                 .body(ac).post();
 
         response.prettyPrint();
+
+        Assert.assertEquals(response.getStatusCode(), 201,"Response code fail");
 
         System.out.println("Status code: " + response.getStatusCode());
     }
